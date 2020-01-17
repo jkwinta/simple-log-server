@@ -24,10 +24,15 @@ def clear_messages():
 
 @api.route('/messages', methods=('GET',))
 def get_messages():
-    result = Message.query.all()
-    return 'get_messages'
-
-# db.session.add(User(name="Flask", email="example@example.com"))
-# db.session.commit()
-#
-# users = User.query.all()
+    messages = Message.query.all()
+    message_strings = []
+    for message in messages:
+        local_time = message.get_local_time()
+        if local_time is not None:
+            local_time_str = local_time.isoformat()
+        else:
+            local_time_str = local_time
+        # TODO: parse json and embed?
+        message_strings.append('{} : {}'.format(local_time_str, message.message))
+    result = '<br>'.join(message_strings)
+    return result
