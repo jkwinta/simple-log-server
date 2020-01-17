@@ -9,6 +9,8 @@ def timestamptz_now():
 
 
 class Message(db.Model):
+    __tablename__ = 'messages'
+
     time = db.Column(db.String(length=32), primary_key=True,
                      default=timestamptz_now)
     message = db.Column(db.Text, nullable=False)
