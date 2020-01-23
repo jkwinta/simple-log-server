@@ -1,24 +1,41 @@
-# from log_server import app
+import json
+import os
+
 from log_server.message import Message
-from flask import Blueprint, request
+from flask import Blueprint, request, Response
 from log_server import db
 
 api = Blueprint('logger', __name__)
 
+MAX_MESSAGES = os.environ.get('MAX_MESSAGES')
+try:
+    MAX_MESSAGES = int(MAX_MESSAGES)
+except:
+    MAX_MESSAGES = None
+
 
 @api.route('/log', methods=('POST',))
 def log_message():
+    # TODO: Delete oldest messages if message count exceeds MAX_MESSAGES
     # force in case it doesn't have Content-Type="application/json"
     content = request.get_json(silent=True, force=True)
-    keys = [col.key for col in Message.__table__.columns]
 
-    new_message = Message(**{k: v for k, v in content.items() if k in keys})
+    message = content.get('message', '')
+
+    try:
+        message = json.dumps(message)
+    except:
+        message = str(message)
+
+    new_message = Message(message=str(message))
     db.session.add(new_message)
     db.session.commit()
+    return Response('200')
 
 
 @api.route('/clear', methods=('POST',))
 def clear_messages():
+    # TODO: clear messages
     return 'clear_messages'
 
 
