@@ -4,10 +4,14 @@ import random
 
 HOST = '0.0.0.0'
 PORT = 3000
-MESSAGE = 'test message {}'.format(random.random())
+MESSAGE = 'test message {}'
 PATH = 'log'
 
-client = http.client.HTTPConnection(HOST, PORT, timeout=0.01)
-data = json.dumps({"message": MESSAGE})
-client.request('POST', PATH, data, {"Content-Type": "application/json"})
-client.close()
+N_MESSAGES = 10
+
+for _ in range(N_MESSAGES):
+    client = http.client.HTTPConnection(HOST, PORT, timeout=0.01)
+    message = MESSAGE.format(random.random())
+    data = json.dumps({"message": message})
+    client.request('POST', PATH, data, {"Content-Type": "application/json"})
+    client.close()

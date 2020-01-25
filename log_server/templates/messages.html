@@ -1,0 +1,26 @@
+<!doctype html>
+<html>
+<head>
+    <title>Logger</title>
+</head>
+<body>
+<a href="{{ url_for('logger.clear_messages') }}">Clear messages</a>
+
+<table border="1">
+    <tr>
+        <th>Time</th>
+        <th>Message</th>
+    </tr>
+
+    {% for message in messages %}
+    <tr>
+        <th>{{ message.time }}</th>
+        <th>{{ message.message }}</th>
+    </tr>
+    {% endfor %}
+
+</table>
+
+</body>
+</html>
+
