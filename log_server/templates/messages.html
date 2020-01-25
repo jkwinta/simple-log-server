@@ -8,13 +8,13 @@
 
 <table border="1">
     <tr>
-        <th>Time</th>
+        <th width="25%">Time</th>
         <th>Message</th>
     </tr>
 
     {% for message in messages %}
     <tr>
-        <th>{{ message.time }}</th>
+        <th width="25%">{{ message.time }}</th>
         <th>{{ message.message }}</th>
     </tr>
     {% endfor %}

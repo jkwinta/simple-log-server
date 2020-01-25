@@ -17,6 +17,7 @@ except:
 @api.route('/log', methods=('POST',))
 def log_message():
     # TODO: Delete oldest messages if message count exceeds MAX_MESSAGES
+    # TODO: Insert to not fail on repeat key (retry get key with insert)
     # force in case it doesn't have Content-Type="application/json"
     content = request.get_json(silent=True, force=True)
 
@@ -51,6 +52,7 @@ def get_messages():
         else:
             local_time_str = local_time
         # TODO: parse json and embed?
+        # TODO: Browse to bottom of page
         formatted_messages.append({'time': local_time_str,
                                    'message': message.message})
     return render_template('messages.html', messages=formatted_messages)
