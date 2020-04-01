@@ -1,5 +1,4 @@
 import json
-import os
 
 from log_server.message import Message
 from flask import Blueprint, request, Response, render_template
@@ -7,26 +6,21 @@ from log_server import db
 
 api = Blueprint('logger', __name__)
 
-MAX_MESSAGES = os.environ.get('MAX_MESSAGES')
-try:
-    MAX_MESSAGES = int(MAX_MESSAGES)
-except:
-    MAX_MESSAGES = None
-
 
 @api.route('/log', methods=('POST',))
 def log_message():
-    # TODO: Delete oldest messages if message count exceeds MAX_MESSAGES
-    # TODO: Insert to not fail on repeat key (retry get key with insert)
     # force in case it doesn't have Content-Type="application/json"
     content = request.get_json(silent=True, force=True)
 
     message = content.get('message', '')
 
-    try:
-        message = json.dumps(message)
-    except:
-        message = str(message)
+    # try:
+    #     message = json.dumps(message)
+    # except:
+    #     message = str(message)
+
+    if Message:
+        pass
 
     new_message = Message(message=str(message))
     db.session.add(new_message)
@@ -52,7 +46,6 @@ def get_messages():
         else:
             local_time_str = local_time
         # TODO: parse json and embed?
-        # TODO: Browse to bottom of page
         formatted_messages.append({'time': local_time_str,
                                    'message': message.message})
     return render_template('messages.html', messages=formatted_messages)

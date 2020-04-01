@@ -1,6 +1,7 @@
 import http.client
 import json
 import random
+import time
 
 HOST = '0.0.0.0'
 PORT = 3000
@@ -15,3 +16,4 @@ for _ in range(N_MESSAGES):
     data = json.dumps({"message": message})
     client.request('POST', PATH, data, {"Content-Type": "application/json"})
     client.close()
+    time.sleep(0.1)

@@ -1,6 +1,7 @@
 <!doctype html>
 <html>
 <head>
+    <meta http-equiv="refresh" content="10;url={{ url_for('logger.get_messages') }}">
     <title>Logger</title>
 </head>
 <body>
@@ -8,13 +9,13 @@
 
 <table border="1">
     <tr>
-        <th width="25%">Time</th>
+        <th>Time</th>
         <th>Message</th>
     </tr>
 
     {% for message in messages %}
     <tr>
-        <th width="25%">{{ message.time }}</th>
+        <th>{{ message.time }}</th>
         <th>{{ message.message }}</th>
     </tr>
     {% endfor %}
