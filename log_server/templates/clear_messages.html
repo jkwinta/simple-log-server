@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta http-equiv="refresh" content="5;url={{ url_for('logger.get_messages') }}">
+    <meta http-equiv="refresh" content="5;url={{ url_for('get_messages') }}">
     <title>Logger messages deleted</title>
 </head>
 <body>
 
 <h1>{{ n_del }} messages deleted</h1>
 <p>
-    <a href="{{ url_for('logger.get_messages') }}">Back to messages</a>
+    <a href="{{ url_for('get_messages') }}">Back to messages</a>
 </p>
 
 </body>

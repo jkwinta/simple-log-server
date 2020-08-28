@@ -1,2 +1,5 @@
 flask
 Flask-SQLAlchemy
+websockets
+flask-socketio
+eventlet

@@ -1,13 +1,13 @@
 <!doctype html>
 <html>
 <head>
-    <meta http-equiv="refresh" content="10;url={{ url_for('logger.get_messages') }}">
+    <!--    <meta http-equiv="refresh" content="10;url={{ url_for('get_messages') }}">-->
     <title>Logger</title>
 </head>
 <body>
-<a href="{{ url_for('logger.clear_messages') }}">Clear messages</a>
+<a href="{{ url_for('clear_messages') }}">Clear messages</a>
 
-<table border="1">
+<table border="1" id="myTable">
     <tr>
         <th>Time</th>
         <th>Message</th>
@@ -15,8 +15,8 @@
 
     {% for message in messages %}
     <tr>
-        <th>{{ message.time }}</th>
-        <th>{{ message.message }}</th>
+        <td>{{ message.time }}</td>
+        <td>{{ message.message }}</td>
     </tr>
     {% endfor %}
 
@@ -25,3 +25,29 @@
 </body>
 </html>
 
+<!--<script>-->
+<!--    var exampleSocket = new WebSocket("ws://" + window.location.host + "/ws");-->
+<!--    exampleSocket.onmessage = function (event) {-->
+<!--  console.log(event.data);-->
+<!--}-->
+
+<!--</script>-->
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.1.1/socket.io.js"></script>
+<script>
+    socket = io("ws://" + window.location.host + "/ws");
+    socket.on('message', function(m){
+        var table = document.getElementById("myTable");
+        var row = document.createElement('tr');
+        var timeCell = document.createElement('td');
+        var messageCell = document.createElement('td');
+
+        timeCell.textContent = m.time;
+        messageCell.textContent = m.message;
+
+        row.appendChild(timeCell);
+        row.appendChild(messageCell);
+
+        table.appendChild(row);
+    });
+</script>
