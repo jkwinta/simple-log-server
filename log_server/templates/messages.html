@@ -3,23 +3,40 @@
 <head>
     <!--    <meta http-equiv="refresh" content="10;url={{ url_for('get_messages') }}">-->
     <title>Logger</title>
+    <style>
+    header {
+        position: sticky;
+        top: 0;
+        padding: 15px;
+        background: white;
+        box-shadow: 0 7px 8px rgba(0, 0, 0, 0.12);
+        border: 2px solid black;
+    }
+
+    </style>
 </head>
 <body>
-<a href="{{ url_for('clear_messages') }}">Clear messages</a>
+<header>
+    <a href="{{ url_for('clear_messages') }}">Clear messages</a>
+
+</header>
 
 <table border="1" id="myTable">
+    <thead>
     <tr>
         <th>Time</th>
         <th>Message</th>
     </tr>
+    </thead>
 
+    <tbody>
     {% for message in messages %}
     <tr>
         <td>{{ message.time }}</td>
         <td>{{ message.message }}</td>
     </tr>
     {% endfor %}
-
+    </tbody>
 </table>
 
 </body>
@@ -50,4 +67,7 @@
 
         table.appendChild(row);
     });
+
+
+
 </script>
